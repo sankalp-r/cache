@@ -35,6 +35,18 @@ Get(key string) string
 * This implementation is meant to be consumed as library(package).
   Given that you have correct access rights on the repo, it can be consumed by running `go get <module_name>` or `go install <module_name>`.
 
+* Example:
+ ```go
+import "github.com/sankalp-r/cache"
+
+
+func main() {
+    lruCache, _ := cache.NewCache(5)
+    lruCache.Put("key", "val")
+    lruCache.Get("key")
+}
+```
+
 ## Limitations and enhancement-scope
 * As this is an in-memory implementation, it will not scale well as the data grows large. To solve this issue, persistence like redis can be used by creating another implementation of `Cache` interface.
 * Different types of eviction policies can be easily added by implementing the `Cache` interface.
