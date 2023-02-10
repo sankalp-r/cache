@@ -2,8 +2,21 @@
 
 **Problem Statement**: Create an in-memory cache in Go for storing String values based on a String key. Expect that the cache will continually have previously unseen keys added to it, and that some keys will be fetched more frequently than others.
 
-
 ## Design details
+This cache implementation has following signature:
+
+```
+type Cache interface {
+// Inserts the provided key/value pair into the cache, making it
+// available for future Get() calls.
+Put(key, value string)
+	
+// Returns a value previously provided via Put(). An empty String
+// may be returned if the requested data was never inserted or is
+// no longer available.
+Get(key string) string
+}
+```
  This cache implementation is based on least-recently-used eviction policy. Normally to store key-value pair, map data-structure is sufficient. 
  But to evict and find least-recently-used key efficiently, this cache implementation relies on map along with doubly-linked-list .
  
@@ -23,5 +36,5 @@
   Given that you have correct access rights on the repo, it can be consumed by running `go get <module_name>` or `go install <module_name>`.
 
 ## Limitations and enhancement-scope
-* As this is an in-memory implementation, it will not scale well as the data grows large. To solve this issue, persistence like redis can be used by creating another implementation of `Cahce` interface.
-* Different types of eviction policies can be easily added by implementing the `Cahce` interface.
+* As this is an in-memory implementation, it will not scale well as the data grows large. To solve this issue, persistence like redis can be used by creating another implementation of `Cache` interface.
+* Different types of eviction policies can be easily added by implementing the `Cache` interface.
